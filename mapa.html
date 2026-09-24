@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interaktywna Mapa</title>
+
+  <!-- CSS dla biblioteki Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <style>
+    /* Reset marginesów */
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Kontener mapy - zajmuje 100% dostepnego miejsca */
+    #map {
+      width: 100%;
+      height: 100vh;
+    }
+
+    /* Stylizacja okienka popup */
+    .custom-popup .leaflet-popup-content-wrapper {
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Kontener na mapę -->
+  <div id="map"></div>
+
+  <!-- Skrypt JavaScript biblioteki Leaflet -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script>
+    // 1. Współrzędne początkowe (np. Warszawa) i poziom powiększenia (zoom)
+    const lat = 52.2297;
+    const lng = 21.0122;
+    const zoomLevel = 13;
+
+    // 2. Inicjalizacja mapy w divie #map
+    const map = L.map('map').setView([lat, lng], zoomLevel);
+
+    // 3. Dodanie warstwy podkładu mapowego z OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    // 4. Dodanie pierwszego znacznika (Marker)
+    const marker = L.marker([lat, lng]).addTo(map);
+    marker.bindPopup("<b>Witaj!</b><br>To jest Twój główny punkt na mapie.").openPopup();
+
+    // 5. Opcjonalnie: Dodanie drugiego punktu (np. Kraków)
+    const marker2 = L.marker([50.0647, 19.9450]).addTo(map);
+    marker2.bindPopup("<b>Oddział Kraków</b><br>Zapraszamy do naszego drugiego biura.");
+  </script>
+
+</body>
+</html>
