@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Interaktywna Mapa</title>
 
-  <!-- CSS dla biblioteki Leaflet -->
+  <!-- Style CSS dla biblioteki Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
   <style>
-    /* Reset marginesów */
+    /* Reset marginesów, aby mapa zajmowała cały ekran */
     html, body {
       margin: 0;
       padding: 0;
@@ -19,50 +19,82 @@
       font-family: Arial, sans-serif;
     }
 
-    /* Kontener mapy - zajmuje 100% dostepnego miejsca */
+    /* Kontener na mapę */
     #map {
       width: 100%;
       height: 100vh;
-    }
-
-    /* Stylizacja okienka popup */
-    .custom-popup .leaflet-popup-content-wrapper {
-      background: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
   </style>
 </head>
 <body>
 
-  <!-- Kontener na mapę -->
+  <!-- Kontener, w którym wyświetli się mapa -->
   <div id="map"></div>
 
-  <!-- Skrypt JavaScript biblioteki Leaflet -->
+  <!-- Biblioteka Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+  <!-- Twój własny skrypt do obsługi mapy i punktów -->
   <script>
-    // 1. Współrzędne początkowe (np. Warszawa) i poziom powiększenia (zoom)
-    const lat = 52.2297;
-    const lng = 21.0122;
-    const zoomLevel = 13;
+    // 1. Ustawienie środka mapy (szerokość, długość geograficzna) oraz poziomu powiększenia (zoom: np. 12)
+    const map = L.map('map').setView([52.2297, 21.0122], 12);
 
-    // 2. Inicjalizacja mapy w divie #map
-    const map = L.map('map').setView([lat, lng], zoomLevel);
-
-    // 3. Dodanie warstwy podkładu mapowego z OpenStreetMap
+    // 2. Ładowanie darmowych kafelków mapy z OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
-    // 4. Dodanie pierwszego znacznika (Marker)
-    const marker = L.marker([lat, lng]).addTo(map);
-    marker.bindPopup("<b>Witaj!</b><br>To jest Twój główny punkt na mapie.").openPopup();
 
-    // 5. Opcjonalnie: Dodanie drugiego punktu (np. Kraków)
-    const marker2 = L.marker([50.0647, 19.9450]).addTo(map);
-    marker2.bindPopup("<b>Oddział Kraków</b><br>Zapraszamy do naszego drugiego biura.");
+    // ==========================================
+    // TUTAJ DODAJESZ SWOJE PUNKTY (MARKERY)
+    // ==========================================
+
+    const marker4 =
+L.marker([49.7926239, 20.0403992]).addTo(map);
+marker4.bindPopup("<b>Góra</b><br>piękne widoki."); ki
+
+   const marker5 =
+L.marker([49.9346127, 20.1834914]).addTo(map);
+marker5.bindPopup("<b>skromie</background</b>.");
+
+
+    const marker1 = L.marker([52.2297, 21.0122]).addTo(map);
+    marker1.bindPopup("<b>Warszawa - Centrum</b><br>Główny punkt na mapie.");
+
+    // PUNKT 2: Domyślnie otwarte okienko (.openPopup())
+    const marker2 = L.marker([52.2150, 21.0350]).addTo(map);
+    marker2.bindPopup("<b>Park Łazienki Królewskie</b><br>Otwarte codziennie od 6:00.").openPopup();
+
+    // PUNKT 3: Rozbudowany opis ze zdjęciem i linkiem
+    const marker3 = L.marker([52.2400, 21.0180]).addTo(map);
+    marker3.bindPopup(`
+      <div style="text-align: center;">
+        <h4 style="margin: 0 0 5px 0;">Stare Miasto</h4>
+        <img src="https://picsum.photos/150/100" style="width: 100%; border-radius: 6px; margin-bottom: 5px;">
+        <p style="margin: 0 0 5px 0;">Zabytkowa część miasta.</p>
+        <a href="https://pl.wikipedia.org/wiki/Stare_Miasto_w_Warszawie" target="_blank">Więcej informacji</a>
+      </div>
+    `);
+
+    // PUNKT 4: Przykład kolejnego punktu (wystarczy podmienić współrzędne i tekst)
+    // L.marker([50.0647, 19.9450]).addTo(map).bindPopup("<b>Kraków</b><br>Kolejny punkt.");
+ki
+
+
+    // ==========================================
+    // OPCJONALNIE: KSZTAŁTY (OKRĘGI, LINIE)
+    // ==========================================
+
+    // Dodanie czerwonego okręgu (np. zasięg dostawy / obszar)
+    const circle = L.circle([52.2297, 21.0122], {
+      color: 'red',
+      fillColor: '#f03',
+      fillOpacity: 0.15,
+      radius: 3000 // promień w metrach (3 km)
+    }).addTo(map);
+    circle.bindPopup("Obszar działania / dostawy");
+
   </script>
 
 </body>
